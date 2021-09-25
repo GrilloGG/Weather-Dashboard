@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <title>Weather Dashboard</title>
+</head>
+<body >
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <section class="d-flex flex-row">
+        <section class="search-city d-flex flex-column col-3">
+            <h2 class="my-3 mx-2">Search for a City:</h2>
+            <div class="input-group mb-3">
+                <input id="input-search" type="text" class="form-control" placeholder="Search for a City"  aria-describedby="button-addon2">
+                <button id="search-btn" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+            </div>
+            <ul id="previous-searchs">
+            </ul>
+        </section>
+
+        <section id = "weather-display" class="d-flex flex-column col-9" >
+            <section id = "current-weather" class="d-flex flex-column mt-3 border border-dark border-3 rounded">
+                <div id = "header-current-city" class = "inline"></div>
+                <ul id = "current-city-list" class = "list group list-group-flush">
+                </ul>
+            </section>
+            <section id="future-weather" class="p-5 d-flex">
+            
+            </section>
+            
+        </section>
+        
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./assets/javascript/script.js"></script>
+</body>
+</html>

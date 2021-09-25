@@ -1,0 +1,35 @@
+header{
+    background-color: rgb(0, 134, 196) ;
+    padding: 35px 0px;
+    text-align: center;
+}
+
+
+.img-icon{
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.uv-green{
+    background-color: green;
+}
+.uv-yellow{
+    background-color: yellow;
+}
+.uv-orange{
+    background-color: orange;
+}
+.uv-red{
+    background-color: red;
+}
+.uv-purple{
+    background-color: purple;
+}
+.inline{
+    display: flex;
+}
+
+.uv-value-text{
+border-radius: 5px;
+padding: 1px 8px;
+}
