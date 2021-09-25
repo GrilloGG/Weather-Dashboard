@@ -10,6 +10,7 @@ searchBtn.addEventListener("click", getCurrentWeather);
 
 
 function getCurrentWeather (city){
+    cleanScreen()
     city = citySearched.value.trim()
     inputSearch.value = ""
     console.log(city)
@@ -42,17 +43,17 @@ function getCurrentWeather (city){
 
         let tempValue = document.createElement("li")
         tempValue.textContent = "Temperature: " + data.main.temp + "°C";
-        tempValue.setAttribute("class", "list-group-item")
+        tempValue.setAttribute("class", "list-group-item bg-info")
         currentCityList.appendChild(tempValue)
 
         let windValue = document.createElement("li")
         windValue.textContent = "Wind: " + data.wind.speed + "KM/H"
-        windValue.setAttribute("class", "list-group-item")
+        windValue.setAttribute("class", "list-group-item bg-info")
         currentCityList.appendChild(windValue)
 
         let humidityValue = document.createElement("li")
         humidityValue.textContent = "Humidity: " + data.main.humidity + "%"
-        humidityValue.setAttribute("class", "list-group-item")
+        humidityValue.setAttribute("class", "list-group-item bg-info")
         currentCityList.appendChild(humidityValue)
 
         let latitude = data.coord.lat
@@ -64,7 +65,7 @@ function getCurrentWeather (city){
         console.log(data)
 
         let uvValue = document.createElement("li")
-        uvValue.setAttribute("class", "list-group-item")
+        uvValue.setAttribute("class", "list-group-item bg-info")
         uvValue.textContent = "UV Index: " 
         
         let uvValueBackground = document.createElement("span")
@@ -92,4 +93,21 @@ function getCurrentWeather (city){
 }
 
 
-
+function cleanScreen(){
+    if(!headerCurrentCity.firstChild){
+        return
+    }
+    else{
+        while(headerCurrentCity.firstChild){
+            headerCurrentCity.removeChild(headerCurrentCity.firstChild)
+        }
+    }
+    if(!currentCityList.firstChild){
+        return
+    }
+    else{
+        while(currentCityList.firstChild){
+            currentCityList.removeChild(currentCityList.firstChild)
+        }
+    }
+}
