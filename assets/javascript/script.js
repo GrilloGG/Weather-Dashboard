@@ -1,15 +1,15 @@
 const searchBtn = document.getElementById("search-btn")
 let inputSearch = document.getElementById("input-search")
-let currentWeather = document.getElementById("current-weather")
 let citySearched = document.getElementById("input-search")
+let weatherDisplay = document.getElementById("weather-display")
 let currentCityList = document.getElementById("current-city-list")
 let headerCurrentCity = document.getElementById("header-current-city")
-let iconWeather = document.getElementById("icon-weather")
-let city = 
+let futureWeather = document.getElementById("future-weather")
+
 searchBtn.addEventListener("click", getCurrentWeather);
 
 
-function getCurrentWeather (city){
+function getCurrentWeather (){
     cleanScreen()
     city = citySearched.value.trim()
     inputSearch.value = ""
@@ -19,6 +19,7 @@ function getCurrentWeather (city){
     .then(response => response.json())
     .then(function (data){
         console.log(data)
+        weatherDisplay.setAttribute("class", "d-flex flex-column col-9 show")
         let currentCityTitle = document.createElement("h3");
         currentCityTitle.textContent = data.name + ", " + data.sys.country +"  ";
         currentCityTitle.setAttribute("class", "m-2")
@@ -43,29 +44,29 @@ function getCurrentWeather (city){
 
         let tempValue = document.createElement("li")
         tempValue.textContent = "Temperature: " + data.main.temp + "°C";
-        tempValue.setAttribute("class", "list-group-item bg-info")
+        tempValue.setAttribute("class", "list-group-item bg-secondary")
         currentCityList.appendChild(tempValue)
 
         let windValue = document.createElement("li")
         windValue.textContent = "Wind: " + data.wind.speed + "KM/H"
-        windValue.setAttribute("class", "list-group-item bg-info")
+        windValue.setAttribute("class", "list-group-item bg-secondary")
         currentCityList.appendChild(windValue)
 
         let humidityValue = document.createElement("li")
         humidityValue.textContent = "Humidity: " + data.main.humidity + "%"
-        humidityValue.setAttribute("class", "list-group-item bg-info")
+        humidityValue.setAttribute("class", "list-group-item bg-secondary")
         currentCityList.appendChild(humidityValue)
 
         let latitude = data.coord.lat
         let longitude = data.coord.lon
-        return fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+latitude+'&units=metric&exclude=minutely,hourly,daily&lon='+longitude+'&appid=f8ed10bf86bf8687536af3bbc547d2af')
+        return fetch('https://api.openweathermap.org/data/2.5/onecall?lat='+latitude+'&units=metric&exclude=minutely,hourly&lon='+longitude+'&appid=f8ed10bf86bf8687536af3bbc547d2af')
     })
     .then(response => response.json())
     .then(function (data){
         console.log(data)
 
         let uvValue = document.createElement("li")
-        uvValue.setAttribute("class", "list-group-item bg-info")
+        uvValue.setAttribute("class", "list-group-item bg-secondary")
         uvValue.textContent = "UV Index: " 
         
         let uvValueBackground = document.createElement("span")
@@ -89,7 +90,48 @@ function getCurrentWeather (city){
         }
      
         currentCityList.appendChild(uvValue)
+        getFutureWeather(data)
     })
+}
+
+
+function getFutureWeather(data){
+console.log(data)
+    for (var  i=0; i<5; i++){
+        
+        let containerForecast = document.createElement("div")
+        containerForecast.setAttribute("class", " m-3 p-4 bg-info text-white rounded ")
+        futureWeather.appendChild(containerForecast)
+
+        let dateCalendarForecast = new Date(data.daily[i+1].dt*1000);
+        let dateDisplayForecast = document.createElement("h3")
+        dateDisplayForecast.textContent = dateCalendarForecast.toLocaleDateString("en-GB")
+        dateDisplayForecast.setAttribute("class", "")
+        containerForecast.appendChild(dateDisplayForecast)
+
+        let iconCodeForecast = data.daily[i+1].weather[0].icon
+        let iconUrlForecast = "http://openweathermap.org/img/wn/" + iconCodeForecast + ".png"
+        let weatherIconForecast = document.createElement("img")
+        weatherIconForecast.setAttribute("src", iconUrlForecast)
+        weatherIconForecast.setAttribute("class", "img-icon")
+        containerForecast.appendChild(weatherIconForecast)
+
+
+        let tempValueForecast = document.createElement("p")
+        tempValueForecast.textContent = "Temp: " + data.daily[i+1].temp.day + "°C";
+        tempValueForecast.setAttribute("class", "")
+        containerForecast.appendChild(tempValueForecast)
+
+        let windValueForecast = document.createElement("p")
+        windValueForecast.textContent = "Wind: " + data.daily[i+1].wind_speed + "KM/H"
+        windValueForecast.setAttribute("class", "")
+        containerForecast.appendChild(windValueForecast)
+
+        let humidityValueForecast = document.createElement("p")
+        humidityValueForecast.textContent = "Humidity: " + data.daily[i+1].humidity + "%"
+        humidityValueForecast.setAttribute("class", "")
+        containerForecast.appendChild(humidityValueForecast)
+    }
 }
 
 
@@ -108,6 +150,14 @@ function cleanScreen(){
     else{
         while(currentCityList.firstChild){
             currentCityList.removeChild(currentCityList.firstChild)
+        }
+    }
+    if(!futureWeather.firstChild){
+        return
+    }
+    else{
+        while(futureWeather.firstChild){
+            futureWeather.removeChild(futureWeather.firstChild)
         }
     }
 }
