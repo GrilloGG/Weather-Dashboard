@@ -9,16 +9,14 @@ let buttonsPreviousCities = document.getElementById("buttons-previous-cities")
 let city =""
 
 searchBtn.addEventListener("click", () => {
-    getCurrentWeather();
+    city = inputSearch.value.trim()
+    getCurrentWeather(city);
     searchCityList();
-
 });
 
-function getCurrentWeather (){
+function getCurrentWeather (city){
     cleanScreen()
-    city = inputSearch.value.trim()
     inputSearch.value = ""
-    console.log(city)
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=f8ed10bf86bf8687536af3bbc547d2af";
     fetch(apiUrl)
     .then(response => response.json())
@@ -95,7 +93,12 @@ function getCurrentWeather (){
         currentCityList.appendChild(uvValue)
         getFutureWeather(data)
     })
+    .catch(function (error) {
+        alert('Please enter a valid city');
+        return
+      })
 }
+
 
 function getFutureWeather(data){
     for (var  i=0; i<5; i++){
@@ -135,6 +138,7 @@ function getFutureWeather(data){
     }
 }
 
+
 function cleanScreen(){
     if(!headerCurrentCity.firstChild){
         return
@@ -163,31 +167,24 @@ function cleanScreen(){
 }
 
 
-
 let cities = []
 
 function renderCities(){
-    
-    console.log("cuando render")
-    console.log(cities);
-    let citiesreverse = cities.reverse()
-    console.log(citiesreverse)
     for (var i = 0  ; i <  9 ; i++){
-    let cityDisplay = citiesreverse[i];
+    let cityDisplay = cities[i];
     
     let previousSearchList = document.createElement("li");
     previousSearchList.setAttribute("class", " d-flex  flex-column list-unstyled")
     previousSearchs.appendChild(previousSearchList)
 
-
     let previousCityButton = document.createElement("button")
     previousCityButton.setAttribute("class", "my-1 rounded border-0")
     previousCityButton.textContent = cityDisplay
+    previousCityButton.value = cityDisplay
+    previousCityButton.onclick = buttonValue
     previousCityButton.type = "button"
     previousSearchList.appendChild(previousCityButton)
-
     }
-
 }
 
 function init(){
@@ -196,21 +193,16 @@ function init(){
     if (storedCities !== null){
         cities = storedCities;
     }   
-    console.log("cuando init")
-    console.log(storedCities)
-    
     renderCities();
 }
 
 function storeCities(){
     localStorage.setItem("City", JSON.stringify(cities));
-    console.log("cuanod store")
+    
 }
 
 function searchCityList(){
-    
-    cities.push(city);
-    console.log("cuando clik");
+    cities.unshift(city);
     storeCities();
     cleanButtons();
     renderCities();
@@ -225,17 +217,11 @@ function cleanButtons(){
             previousSearchs.removeChild(previousSearchs.firstChild)
         }
     }
-    console.log("cuando clean")
 }
 
-buttonsPreviousCities.addEventListener("click", (event) => {
-    const isButton = event.target.nodeName === "BUTTON" ;
-    if(!isButton){
-        return
-    }
-    let cityClicked = event.target.textContent
-    console.log(cityClicked)
-    //getCurrentWeather(cityClicked);
-})
+
+function buttonValue (event){
+    getCurrentWeather(this.value)
+}
 
 init()
