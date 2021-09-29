@@ -16,4 +16,4 @@ It has been created with **HTML/CSS/JavaScript** and the openweathermap API.
 
 ## Link to Deployed Application
 
-https://grillogg.github.io/Day-Planner/
+https://grillogg.github.io/Weather-Dashboard/
