@@ -170,7 +170,7 @@ function cleanScreen(){
 let cities = []
 
 function renderCities(){
-    for (var i = 0  ; i <  9 ; i++){
+    for (var i = 0  ; i <  10 ; i++){
     let cityDisplay = cities[i];
     
     let previousSearchList = document.createElement("li");

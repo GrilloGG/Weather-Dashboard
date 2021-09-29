@@ -6,7 +6,7 @@ It will also show a 5 day forecast with the main data for the same city.
 
 On the left side it has the last 10 cities searched to have easy access.
 
-It has been created with **HTML/CSS/JavaScript**.
+It has been created with **HTML/CSS/JavaScript** and the openweathermap API.
 
 ## Website Screenshots
 
